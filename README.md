@@ -53,4 +53,4 @@ The Config has descriptions for the values inside and they go as such:
   
 **Base Move-Speed is `1.0`, or `-` in game.**
 
-**General rule is the value shown in game is `-1.00` or `-100%`**
+**General rule is the value shown in game is `-1.00` or `-100%` of what you've set.**
