@@ -12,7 +12,7 @@ Adds a configurable minimum, maximum, and added (or subtracted) bonus to the mov
 
 - Run the game to add a config file.
 
-You have now installed **Move Speed Cap+`!**
+You have now installed **Move Speed Cap+!**
 
 ## Config
 
