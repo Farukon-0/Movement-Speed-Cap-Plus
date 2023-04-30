@@ -24,6 +24,9 @@
     <Reference Include="MelonLoader">
       <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Vampire Survivors\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Vampire Survivors\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Vampire Survivors\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
