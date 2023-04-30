@@ -15,7 +15,7 @@ namespace Movement_Speed_Cap_Plus
         public const string Description = "Adds a configurable min, max, and added bonus to your Movement Speed";
         public const string Author = "Farukon";
         public const string Company = "";
-        public const string Version = "0.1.0";
+        public const string Version = "1.0.0";
         public const string Download = "";
     }
 
