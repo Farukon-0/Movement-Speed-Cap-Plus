@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using MelonLoader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,7 +37,6 @@ namespace Movement_Speed_Cap_Plus
         public string Default { get; set; }
         public float Value { get; set; }
     }
-
 
     public class MoveSpeedCap : MelonMod
     {
@@ -79,8 +78,8 @@ namespace Movement_Speed_Cap_Plus
             "The point where your controls are inverted is at a negative for the config, below -100% ingame!",
             "REJECT SPEED, EMBRACE AVERAGE!!! Coutesy of Move Speed Cap+.",
             "'MoveSpeedCapPlus' Loaded",
-            "You can also add some speed!",
-            "You can also remove some speed!",
+            "You can also add base speed!",
+            "You can also remove base speed!",
             "A Move Speed Capper shouldn't have this number of random load messages. \n[LMAO]But why not?",
             "!dedaol neeb sah doM +paC deepS evoM ehT"
         };
@@ -131,6 +130,7 @@ namespace Movement_Speed_Cap_Plus
             ModifyConfigValue(EnabledKey, value);
             _Enabled = value;
         }
+
         private static void ValidateConfig()
         {
             try
