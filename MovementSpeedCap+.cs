@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using MelonLoader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -90,7 +90,7 @@ namespace Movement_Speed_Cap_Plus
 
         public override void OnInitializeMelon()
         {
-            System.Random random = new Random();
+            System.Random random = new Random(DateTime.Now.Millisecond);
             int index = random.Next(loadMessages.Length);
             LoggerInstance.Msg($"{loadMessages[index]}");
             {
@@ -162,10 +162,10 @@ namespace Movement_Speed_Cap_Plus
         {
             JObject configJson = JObject.Parse(File.ReadAllText(_ConfigPath) ?? "{}");
             _Enabled = configJson.Value<bool>(EnabledKey);
-            
-            _AddMoveSpeed = configJson.SelectToken(AddMoveSpeedKey).Value<float>(AddMoveSpeedKey);
-            _MinMoveSpeed = configJson.SelectToken(MinMoveSpeedKey).Value<float>(MinMoveSpeedKey);
-            _MaxMoveSpeed = configJson.SelectToken(MaxMoveSpeedKey).Value<float>(MaxMoveSpeedKey);
+
+            _AddMoveSpeed = configJson.SelectToken(AddMoveSpeedKey).Value<float>("Value");
+            _MinMoveSpeed = configJson.SelectToken(MinMoveSpeedKey).Value<float>("Value");
+            _MaxMoveSpeed = configJson.SelectToken(MaxMoveSpeedKey).Value<float>("Value");
         }
     }
 }
