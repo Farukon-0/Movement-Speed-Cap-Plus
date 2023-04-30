@@ -22,7 +22,7 @@ namespace Movement_Speed_Cap_Plus
     public class ConfigData
     {
         public bool Enabled { get; set; } = true;
-        public ConfigSettingData AddMoveSpeed { get; set; } = new ConfigSettingData("Increases or descreases the base movement speed of all characters by a set amount. E.g. 0.11 adds 11% to your movespeed. (Opposite effect on negative.)", "Default = 0.0", 0.0f);
+        public ConfigSettingData AddMoveSpeed { get; set; } = new ConfigSettingData("Increases or descreases the base movement speed of all characters by a set amount. E.g. 0.11 adds 11% to your movespeed. (Opposite effect on a negative.)", "Default = 0.0", 0.0f);
         public ConfigSettingData MinMoveSpeed { get; set; } = new ConfigSettingData("The minimum your movement speed can be. E.g. -0.55 means you'll always have more than -155% movement speed ingame.", "Default = -1.0", -1.0f);
         public ConfigSettingData MaxMoveSpeed { get; set; } = new ConfigSettingData("The maximum your movement speed can be. E.g. 1.58 you'll never have more than +58% movement speed ingame.", "Default = 3.0", 3.0f);
     }
@@ -68,7 +68,7 @@ namespace Movement_Speed_Cap_Plus
             "Move Speed Cap+: The New Mod To Slow Your Day!",
             "Successfully Loaded Move Speed Cap+!",
             "Move Speed Cap+ is better than the rest! Until it's not.",
-            "Move Speed has beed Capped+!",
+            "Move Speed has been Capped+!",
             "Move Speed Cap+: Better Slows Than Quicksand!",
             "Move Speed Cap+: Fully Configurable!",
             "If Move Speed Cap+ isn't good enough, Do it yourself then.",
@@ -83,6 +83,8 @@ namespace Movement_Speed_Cap_Plus
             "You can also add base speed!",
             "You can also remove base speed!",
             "A Move Speed Capper shouldn't have this number of random load messages. \n[LMAO]But why not?",
+            "A mod to add basic configurable stuff to Move Speed shouldn't have taken me a week to make.",
+            "Thanks to Takacomic for making this mod work!",
             "!dedaol neeb sah doM +paC deepS evoM ehT"
         };
 
