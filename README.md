@@ -1,6 +1,8 @@
 # Disclaimer:
 This mod is for the game [**Vampire Survivors**](https://store.steampowered.com/app/1794680/Vampire_Survivors/) and requires [MelonLoader 6.1](https://github.com/LavaGang/MelonLoader/releases) to use.
 
+Mod inspired by [Movement Speed Cap](https://www.nexusmods.com/vampiresurvivors/mods/65) by QKebos made for the old engine.
+
 ## MoveSpeed Cap+
 
 Adds a configurable minimum, maximum, and added (or subtracted) bonus to the movement speed for all characters, and a setting in game to disable/enable the mod.
