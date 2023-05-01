@@ -22,22 +22,9 @@ namespace Movement_Speed_Cap_Plus
     public class ConfigData
     {
         public bool Enabled { get; set; } = true;
-        public ConfigSettingData AddMoveSpeed { get; set; } = new ConfigSettingData("Increases or descreases the base movement speed of all characters by a set amount. E.g. 0.11 adds 11% to your movespeed. (Opposite effect on a negative.)", "Default = 0.0", 0.0f);
-        public ConfigSettingData MinMoveSpeed { get; set; } = new ConfigSettingData("The minimum your movement speed can be. E.g. -0.55 means you'll always have more than -155% movement speed ingame.", "Default = -1.0", -1.0f);
-        public ConfigSettingData MaxMoveSpeed { get; set; } = new ConfigSettingData("The maximum your movement speed can be. E.g. 1.58 you'll never have more than +58% movement speed ingame.", "Default = 3.0", 3.0f);
-    }
-
-    public class ConfigSettingData
-    {
-        public ConfigSettingData(string _description, string _default, float _value)
-        {
-            Description = _description;
-            Default = _default;
-            Value = _value;
-        }
-        public string Description { get; set; }
-        public string Default { get; set; }
-        public float Value { get; set; }
+        public float AddMoveSpeed { get; set; } = 0.0f;
+        public float MinMoveSpeed { get; set; } = -1.0f;
+        public float MaxMoveSpeed { get; set; } = 3.0f;
     }
 
     public class MoveSpeedCap : MelonMod
@@ -162,10 +149,9 @@ namespace Movement_Speed_Cap_Plus
         {
             JObject configJson = JObject.Parse(File.ReadAllText(_ConfigPath) ?? "{}");
             _Enabled = configJson.Value<bool>(EnabledKey);
-
-            _AddMoveSpeed = configJson.SelectToken(AddMoveSpeedKey).Value<float>("Value");
-            _MinMoveSpeed = configJson.SelectToken(MinMoveSpeedKey).Value<float>("Value");
-            _MaxMoveSpeed = configJson.SelectToken(MaxMoveSpeedKey).Value<float>("Value");
+            _AddMoveSpeed = configJson.Value<float>(AddMoveSpeedKey);
+            _MinMoveSpeed = configJson.Value<float>(MinMoveSpeedKey);
+            _MaxMoveSpeed = configJson.Value<float>(MaxMoveSpeedKey);
         }
     }
 }
