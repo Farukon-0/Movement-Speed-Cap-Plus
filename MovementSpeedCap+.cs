@@ -12,7 +12,7 @@ namespace Movement_Speed_Cap_Plus
     public static class ModInfo
     {
         public const string Name = "Move Speed Cap+";
-        public const string Description = "Adds a configurable min, max, and added bonus to your Movement Speed";
+        public const string Description = "Adds a configurable min and max to your Movement Speed.";
         public const string Author = "Farukon";
         public const string Company = "";
         public const string Version = "1.0.0";
@@ -22,7 +22,6 @@ namespace Movement_Speed_Cap_Plus
     public class ConfigData
     {
         public bool Enabled { get; set; } = true;
-        public float AddMoveSpeed { get; set; } = 0.0f;
         public float MinMoveSpeed { get; set; } = -1.0f;
         public float MaxMoveSpeed { get; set; } = 3.0f;
     }
@@ -34,11 +33,9 @@ namespace Movement_Speed_Cap_Plus
         static readonly string _ConfigPath = Path.Combine(_ConfigFolderPath, "MoveSpeedPlusConfig.json");
 
         static readonly string EnabledKey = "Enabled";
-        static readonly string AddMoveSpeedKey = "AddMoveSpeed";
         static readonly string MinMoveSpeedKey = "MinMoveSpeed";
         static readonly string MaxMoveSpeedKey = "MaxMoveSpeed";
         static bool _Enabled;
-        static float _AddMoveSpeed;
         static float _MinMoveSpeed;
         static float _MaxMoveSpeed;
 
@@ -67,8 +64,6 @@ namespace Movement_Speed_Cap_Plus
             "The point where your controls are inverted is at a negative for the config, below -100% ingame!",
             "REJECT SPEED, EMBRACE AVERAGE!!! Coutesy of Move Speed Cap+.",
             "'MoveSpeedCapPlus' Loaded",
-            "You can also add base speed!",
-            "You can also remove base speed!",
             "A Move Speed Capper shouldn't have this number of random load messages. \n[LMAO]But why not?",
             "A mod to add basic configurable stuff to Move Speed shouldn't have taken me a week to make.",
             "Thanks to Takacomic for making this mod work!",
@@ -93,7 +88,7 @@ namespace Movement_Speed_Cap_Plus
             {
                 if (_Enabled)
                 {
-                    float _MoveSpeed = __instance._playerStats._MoveSpeed_k__BackingField + _AddMoveSpeed;
+                    float _MoveSpeed = __instance._playerStats._MoveSpeed_k__BackingField;
                     if (_MoveSpeed > _MaxMoveSpeed) _MoveSpeed = _MaxMoveSpeed;
                     if (_MoveSpeed < _MinMoveSpeed) _MoveSpeed = _MinMoveSpeed;
                     __instance._playerStats._MoveSpeed_k__BackingField = _MoveSpeed;
@@ -149,7 +144,6 @@ namespace Movement_Speed_Cap_Plus
         {
             JObject configJson = JObject.Parse(File.ReadAllText(_ConfigPath) ?? "{}");
             _Enabled = configJson.Value<bool>(EnabledKey);
-            _AddMoveSpeed = configJson.Value<float>(AddMoveSpeedKey);
             _MinMoveSpeed = configJson.Value<float>(MinMoveSpeedKey);
             _MaxMoveSpeed = configJson.Value<float>(MaxMoveSpeedKey);
         }
