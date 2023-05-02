@@ -33,7 +33,7 @@ The Config has descriptions for the values inside and they go as such:
 
 - `Enabled` **(Don't worry about changing this one in the file, there's a button in the gameplay setting)**
 
-- `MoveSpeedAdd`
+- `MoveSpeedAdd` (**!!CURRENTLY REMOVED!!**)
 
   - "Increases or decreases the movement speed of all characters by a set amount. E.g. 0.11 adds 11% to your movespeed. (Opposite effect on negative.)"
   
