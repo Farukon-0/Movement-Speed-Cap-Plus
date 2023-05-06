@@ -113,7 +113,7 @@ namespace Movement_Speed_Cap_Plus
                     float _MoveSpeed = __instance._playerStats._MoveSpeed_k__BackingField;
                     if (_MaxEnabled)
                     {
-                        if (_MoveSpeed < _MinMoveSpeed) _MoveSpeed = _MinMoveSpeed;
+                        if (_MoveSpeed > _MaxMoveSpeed) _MoveSpeed = _MaxMoveSpeed;
                     }
                     if (_MinEnabled)
                     {
