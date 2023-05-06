@@ -3,6 +3,8 @@ This mod is for the game [**Vampire Survivors**](https://store.steampowered.com/
 
 Mod inspired by [Movement Speed Cap](https://www.nexusmods.com/vampiresurvivors/mods/65) by QKebos made for the old engine.
 
+It is recommended to use the [**VampireModMenu**](https://github.com/LeCloutPanda/VampireModMenu/releases) by LeCloutPanda to change the values in the options menu.
+
 ## MoveSpeed Cap+
 
 Adds a configurable minimum, maximum, and added (or subtracted) bonus to the movement speed for all characters, and a setting in game to disable/enable the mod.
@@ -56,3 +58,6 @@ The Config has descriptions for the values inside and they go as such:
 **Base Move-Speed is `1.0`, or `-` in game.**
 
 **General rule is the value shown in game is `-1.00` or `-100%` of what you've set.**
+
+# License
+Distributed under the MIT License. See `LICENSE` for more information.
