@@ -22,7 +22,9 @@ namespace Movement_Speed_Cap_Plus
     public class ConfigData
     {
         public bool Enabled { get; set; } = true;
+        public bool MinEnabled { get; set; } = true;
         public float MinMoveSpeed { get; set; } = -1.0f;
+        public bool MaxEnabled { get; set; } = true;
         public float MaxMoveSpeed { get; set; } = 3.0f;
     }
 
