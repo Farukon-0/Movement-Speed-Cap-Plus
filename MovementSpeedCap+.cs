@@ -1,11 +1,9 @@
 using HarmonyLib;
 using MelonLoader;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Il2CppVampireSurvivors.UI;
-using Il2CppVampireSurvivors.Objects.Characters;
-using System.IO;
 using System;
+using Il2CppVampireSurvivors.Framework.NumberTypes;
+using Il2CppVampireSurvivors.Objects.Characters;
+using UnityEngine;
 
 namespace Movement_Speed_Cap_Plus
 {
@@ -15,41 +13,17 @@ namespace Movement_Speed_Cap_Plus
         public const string Description = "Adds a configurable min and max to your Movement Speed.";
         public const string Author = "Farukon";
         public const string Company = "";
-        public const string Version = "1.1.0";
+        public const string Version = "1.1.1";
         public const string Download = "";
     }
-
-    public class ConfigData
-    {
-        public bool Enabled { get; set; } = true;
-        public bool MinEnabled { get; set; } = true;
-        public float MinMoveSpeed { get; set; } = -1.0f;
-        public bool MaxEnabled { get; set; } = true;
-        public float MaxMoveSpeed { get; set; } = 3.0f;
-    }
-
     public class MoveSpeedCap : MelonMod
     {
-        //Config Folder and File Paths
-        static readonly string _ConfigFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", "Farukon's Mods");
-        static readonly string _ConfigPath = Path.Combine(_ConfigFolderPath, "MoveSpeedPlusConfig.json");
-
-        static readonly string EnabledKey = "Enabled";
-        static readonly string MinEnabledKey = "MinEnabled";
-        static readonly string MinMoveSpeedKey = "MinMoveSpeed";
-        static readonly string MaxEnabledKey = "MaxEnabled";
-        static readonly string MaxMoveSpeedKey = "MaxMoveSpeed";
-        static bool _Enabled;
-        static bool _MinEnabled;
-        static float _MinMoveSpeed;
-        static bool _MaxEnabled;
-        static float _MaxMoveSpeed;
-
-        static void UpdateToggleDebug(bool value) => UpdateEnabled(value);
-
-        static bool SettingAdded = false;
-
-        static System.Action<bool> SettingChanged = UpdateToggleDebug;
+        private static MelonPreferences_Category preferences;
+        private static MelonPreferences_Entry<bool> enabled;
+        private static MelonPreferences_Entry<bool> minEnabled;
+        private static MelonPreferences_Entry<float> minMoveSpeed;
+        private static MelonPreferences_Entry<bool> maxEnabled;
+        private static MelonPreferences_Entry<float> maxMoveSpeed;
 
         //This *MAY* be pointless, impractical, and silly. But I don't care, it's fun.
         private static readonly string[] loadMessages ={
@@ -79,27 +53,16 @@ namespace Movement_Speed_Cap_Plus
 
         public override void OnInitializeMelon()
         {
-            System.Random random = new Random(DateTime.Now.Millisecond);
+            System.Random random = new System.Random(DateTime.Now.Millisecond);
             int index = random.Next(loadMessages.Length);
-            LoggerInstance.Msg($"{loadMessages[index]}");
-            {
-                ValidateConfig();
-            }
-        }
+            Debug.Log(loadMessages[index]);
 
-        DateTime lastModified;
-
-        public override void OnLateUpdate()
-        {
-            base.OnLateUpdate();
-
-            DateTime lastWriteTime = File.GetLastWriteTime(_ConfigPath);
-
-            if (lastModified != lastWriteTime)
-            {
-                lastModified = lastWriteTime;
-                LoadConfig();
-            }
+            preferences = MelonPreferences.CreateCategory("movementspeedcap_preferences");
+            enabled = preferences.CreateEntry("enabled", true);
+            minEnabled = preferences.CreateEntry("minEnabled", true);
+            maxEnabled = preferences.CreateEntry("maxEnabled", true);
+            minMoveSpeed = preferences.CreateEntry("minMoveSpeed", -1.0f);
+            maxMoveSpeed = preferences.CreateEntry("maxMoveSpeed", 3.0f);
         }
 
         [HarmonyPatch(typeof(CharacterController), "OnUpdate")]
@@ -108,74 +71,20 @@ namespace Movement_Speed_Cap_Plus
             [HarmonyPostfix]
             public static void Postfix(CharacterController __instance)
             {
-                if (_Enabled)
+                if (enabled.Value)
                 {
-                    float _MoveSpeed = __instance._playerStats._MoveSpeed_k__BackingField;
-                    if (_MaxEnabled)
+                    EggFloat _MoveSpeed = __instance.PlayerStats._MoveSpeed_k__BackingField;
+                    if (maxEnabled.Value)
                     {
-                        if (_MoveSpeed > _MaxMoveSpeed) _MoveSpeed = _MaxMoveSpeed;
+                        if (_MoveSpeed > maxMoveSpeed.Value) _MoveSpeed = new EggFloat(maxMoveSpeed.Value);
                     }
-                    if (_MinEnabled)
+                    if (minEnabled.Value)
                     {
-                        if (_MoveSpeed < _MinMoveSpeed) _MoveSpeed = _MinMoveSpeed;
+                        if (_MoveSpeed < minMoveSpeed.Value) _MoveSpeed = new EggFloat(minMoveSpeed.Value);
                     }
-                    __instance._playerStats._MoveSpeed_k__BackingField = _MoveSpeed;
+                    __instance.PlayerStats._MoveSpeed_k__BackingField = _MoveSpeed;
                 }
             }
-        }
-
-        [HarmonyPatch(typeof(OptionsController), nameof(OptionsController.BuildGameplayPage))]
-        static class PatchBuildGameplayPage
-        {
-            static void Postfix(OptionsController __instance)
-            {
-                if (!SettingAdded)
-                {
-                    __instance.AddTickBox("Move Speed Cap+", _Enabled, SettingChanged, false);
-                }
-                SettingAdded = true;
-            }
-        }
-
-        [HarmonyPatch(typeof(OptionsController), nameof(OptionsController.AddVisibleJoysticks))]
-        static class PatchAddVisibleJoysticks { static void Postfix() => SettingAdded = false; }
-        private static void UpdateEnabled(bool value)
-        {
-            ModifyConfigValue(EnabledKey, value);
-            _Enabled = value;
-        }
-
-        private static void ValidateConfig()
-        {
-            try
-            {
-                if (!Directory.Exists(_ConfigFolderPath)) Directory.CreateDirectory(_ConfigFolderPath);
-                if (!File.Exists(_ConfigPath)) File.WriteAllText(_ConfigPath, JsonConvert.SerializeObject(new ConfigData { }, Formatting.Indented));
-
-                LoadConfig();
-            }
-            catch (System.Exception ex) { MelonLogger.Msg($"Error: {ex}"); }
-        }
-
-        private static void ModifyConfigValue(string key, object value)
-        {
-            string file = File.ReadAllText(_ConfigPath);
-            JObject json = JObject.Parse(file);
-
-            if (!json.ContainsKey(key)) json.Add(key, JToken.FromObject(value));
-            else json[key] = JToken.FromObject(value);
-
-            string finalJson = JsonConvert.SerializeObject(json, Formatting.Indented);
-            File.WriteAllText(_ConfigPath, finalJson);
-        }
-        private static void LoadConfig()
-        {
-            JObject configJson = JObject.Parse(File.ReadAllText(_ConfigPath) ?? "{}");
-            _Enabled = configJson.Value<bool>(EnabledKey);
-            _MinEnabled = configJson.Value<bool>(MinEnabledKey);
-            _MinMoveSpeed = configJson.Value<float>(MinMoveSpeedKey);
-            _MaxEnabled = configJson.Value<bool>(MaxEnabledKey);
-            _MaxMoveSpeed = configJson.Value<float>(MaxMoveSpeedKey);
         }
     }
 }
