@@ -18,7 +18,4 @@ using Movement_Speed_Cap_Plus;
 [assembly: AssemblyFileVersion(ModInfo.Version)]
 
 [assembly: MelonInfo(typeof(MoveSpeedCap), ModInfo.Name, ModInfo.Version, ModInfo.Author)]
-[assembly: MelonGame("poncle", "VampireSurvivors")]
-[assembly: MelonOptionalDependencies("VampireModMenu")]
-[assembly: VerifyLoaderVersion(0, 6, 1, true)]
-[assembly: MelonAuthorColor(255, 0, 255, 0)]
+[assembly: MelonGame("poncle", "Vampire Survivors")]
